@@ -1,0 +1,19 @@
+{
+  "name": "smart-queue-management-system",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:frontend": "vite",
+    "dev:backend": "cd backend && npm run dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "install:all": "npm install && cd backend && npm install"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2",
+    "vite": "^5.0.0"
+  },
+  "devDependencies": {}
+}

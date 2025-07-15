@@ -1,35 +1,51 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react';
+import Login from './components/Login';
+import Register from './components/Register';
+import Dashboard from './components/Dashboard';
+import AdminDashboard from './components/AdminDashboard';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [currentView, setCurrentView] = useState('login');
+  const [user, setUser] = useState(null);
+
+  const handleLogin = (userData) => {
+    setUser(userData);
+    setCurrentView(userData.role === 'admin' ? 'admin' : 'dashboard');
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    setCurrentView('login');
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="App">
+      {currentView === 'login' && (
+        <Login 
+          onLogin={handleLogin}
+          onSwitchToRegister={() => setCurrentView('register')}
+        />
+      )}
+      {currentView === 'register' && (
+        <Register 
+          onRegister={handleLogin}
+          onSwitchToLogin={() => setCurrentView('login')}
+        />
+      )}
+      {currentView === 'dashboard' && (
+        <Dashboard 
+          user={user}
+          onLogout={handleLogout}
+        />
+      )}
+      {currentView === 'admin' && (
+        <AdminDashboard 
+          user={user}
+          onLogout={handleLogout}
+        />
+      )}
+    </div>
+  );
 }
 
-export default App
+export default App;

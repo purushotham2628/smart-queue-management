@@ -1,7 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import sqlite3 from 'sqlite3'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 
 const app = express()
 const port = 3001

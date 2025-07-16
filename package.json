@@ -13,14 +13,19 @@
     "start:backend": "cd backend && npm start"
   },
   "dependencies": {
-<<<<<<< HEAD
+    "@tailwindcss/forms": "^0.5.10",
+    "autoprefixer": "^10.4.21",
+    "axios": "^1.10.0",
+    "concurrently": "^8.2.2",
+    "lucide-react": "^0.525.0",
+    "postcss": "^8.5.6",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "tailwindcss": "^4.1.11",
     "vite": "^5.0.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.6.0",
-    "concurrently": "^9.2.0"
+    "@vitejs/plugin-react": "^4.6.0"
   },
   "description": "A modern web-based queue management system designed to streamline and enhance customer service efficiency in clinics, banks, and public service centers.",
   "main": "eslint.config.js",
@@ -35,15 +40,4 @@
     "url": "https://github.com/purushotham2628/smart-queue-management/issues"
   },
   "homepage": "https://github.com/purushotham2628/smart-queue-management#readme"
-=======
-    "@tailwindcss/forms": "^0.5.10",
-    "autoprefixer": "^10.4.21",
-    "axios": "^1.10.0",
-    "concurrently": "^8.2.2",
-    "lucide-react": "^0.525.0",
-    "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.11",
-    "vite": "^5.0.0"
-  }
->>>>>>> feca5e9df32c5b8795198c9a0961910ad6da8ae1
 }

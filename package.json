@@ -14,18 +14,18 @@
   },
   "dependencies": {
     "@tailwindcss/forms": "^0.5.10",
-    "autoprefixer": "^10.4.21",
     "axios": "^1.10.0",
     "concurrently": "^8.2.2",
     "lucide-react": "^0.525.0",
-    "postcss": "^8.5.6",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "tailwindcss": "^4.1.11",
     "vite": "^5.0.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.6.0"
+    "@vitejs/plugin-react": "^4.6.0",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.11"
   },
   "description": "A modern web-based queue management system designed to streamline and enhance customer service efficiency in clinics, banks, and public service centers.",
   "main": "eslint.config.js",

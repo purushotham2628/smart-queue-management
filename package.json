@@ -12,8 +12,25 @@
     "install:all": "npm install && cd backend && npm install"
   },
   "dependencies": {
-    "concurrently": "^8.2.2",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "vite": "^5.0.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.6.0",
+    "concurrently": "^9.2.0"
+  },
+  "description": "A modern web-based queue management system designed to streamline and enhance customer service efficiency in clinics, banks, and public service centers.",
+  "main": "eslint.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/purushotham2628/smart-queue-management.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/purushotham2628/smart-queue-management/issues"
+  },
+  "homepage": "https://github.com/purushotham2628/smart-queue-management#readme"
 }

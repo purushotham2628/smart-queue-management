@@ -20,11 +20,24 @@ function Register({ onRegister, onSwitchToLogin }) {
     setLoading(true);
 
     try {
+      // Test backend connection first
+      console.log('🔍 Testing backend connection...');
+      await fetch('http://localhost:3001/api/health');
+      console.log('✅ Backend connection successful');
+      
       const response = await authAPI.register(formData);
       setToast({ message: 'Registration successful!', type: 'success' });
       setTimeout(() => onRegister(response.data), 1000);
     } catch (error) {
-      const errorMessage = error.response?.data?.error || 'Registration failed. Please try again.';
+      console.error('❌ Registration error:', error);
+      let errorMessage = 'Registration failed. Please try again.';
+      
+      if (error.code === 'ECONNREFUSED' || error.message.includes('Network Error')) {
+        errorMessage = 'Cannot connect to server. Please make sure the backend is running.';
+      } else if (error.response?.data?.error) {
+        errorMessage = error.response.data.error;
+      }
+      
       setToast({ message: errorMessage, type: 'error' });
     } finally {
       setLoading(false);

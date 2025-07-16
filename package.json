@@ -4,12 +4,13 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
-    "dev:frontend": "vite",
-    "dev:backend": "cd backend && npm run dev",
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "frontend": "vite --port 3000",
+    "backend": "cd backend && npm run dev",
     "build": "vite build",
     "preview": "vite preview",
-    "install:all": "npm install && cd backend && npm install"
+    "install:all": "npm install && cd backend && npm install",
+    "start:backend": "cd backend && npm start"
   },
   "dependencies": {
     "@tailwindcss/forms": "^0.5.10",

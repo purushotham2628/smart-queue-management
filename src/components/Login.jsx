@@ -18,11 +18,24 @@ function Login({ onLogin, onSwitchToRegister }) {
     setLoading(true);
     
     try {
+      // Test backend connection first
+      console.log('🔍 Testing backend connection...');
+      await fetch('http://localhost:3001/api/health');
+      console.log('✅ Backend connection successful');
+      
       const response = await authAPI.login(formData);
       setToast({ message: 'Login successful!', type: 'success' });
       setTimeout(() => onLogin(response.data), 1000);
     } catch (error) {
-      const errorMessage = error.response?.data?.error || 'Login failed. Please try again.';
+      console.error('❌ Login error:', error);
+      let errorMessage = 'Login failed. Please try again.';
+      
+      if (error.code === 'ECONNREFUSED' || error.message.includes('Network Error')) {
+        errorMessage = 'Cannot connect to server. Please make sure the backend is running.';
+      } else if (error.response?.data?.error) {
+        errorMessage = error.response.data.error;
+      }
+      
       setToast({ message: errorMessage, type: 'error' });
     } finally {
       setLoading(false);

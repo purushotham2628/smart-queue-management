@@ -165,13 +165,13 @@ npm run dev:frontend
 <div align="center">
 
 ### 🔐 Authentication
-<img src="https://images.pexels.com/photos/4386431/pexels-photo-4386431.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Login Interface" width="400" style="border-radius: 8px; margin: 10px;">
+
 
 ### 👥 Customer Dashboard
-<img src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Customer Dashboard" width="400" style="border-radius: 8px; margin: 10px;">
+
 
 ### 🧑‍💼 Admin Panel
-<img src="https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Admin Dashboard" width="400" style="border-radius: 8px; margin: 10px;">
+
 
 </div>
 

@@ -13,7 +13,7 @@ function Dashboard({ user, onLogout }) {
 
   useEffect(() => {
     fetchData();
-    const interval = setInterval(fetchData, 5000); // Refresh every 5 seconds
+    const interval = setInterval(fetchData, 5000);
     return () => clearInterval(interval);
   }, [user.id]);
 
@@ -66,14 +66,14 @@ function Dashboard({ user, onLogout }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="loading-container">
         <LoadingSpinner size="xl" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="dashboard">
       {toast && (
         <Toast
           message={toast.message}
@@ -82,123 +82,104 @@ function Dashboard({ user, onLogout }) {
         />
       )}
 
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-3">
-              <div className="h-8 w-8 bg-primary-600 rounded-lg flex items-center justify-center">
-                <Users className="h-5 w-5 text-white" />
-              </div>
-              <div>
-                <h1 className="text-xl font-semibold text-gray-900">Queue Dashboard</h1>
-                <p className="text-sm text-gray-500">Welcome back, {user.name}</p>
-              </div>
+      <header className="dashboard-header">
+        <div className="header-content">
+          <div className="header-left">
+            <div className="header-icon">
+              <Users />
             </div>
-            <button
-              onClick={onLogout}
-              className="btn-secondary flex items-center space-x-2"
-            >
-              <LogOut className="h-4 w-4" />
-              <span>Logout</span>
-            </button>
+            <div className="header-text">
+              <h1>Queue Dashboard</h1>
+              <p>Welcome back, {user.name}</p>
+            </div>
           </div>
+          <button onClick={onLogout} className="btn-secondary">
+            <LogOut />
+            <span>Logout</span>
+          </button>
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="dashboard-content">
         {userQueue ? (
-          /* Current Queue Status */
-          <div className="mb-8 animate-slide-up">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Your Current Queue</h2>
-            <div className="card bg-gradient-to-r from-primary-50 to-primary-100 border-primary-200">
-              <div className="flex items-center justify-between">
-                <div className="flex-1">
-                  <h3 className="text-xl font-semibold text-primary-900 mb-2">
-                    {userQueue.queue_name}
-                  </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="flex items-center space-x-2">
-                      <MapPin className="h-5 w-5 text-primary-600" />
-                      <span className="text-primary-800">
-                        Position: <span className="font-semibold">#{userQueue.position}</span>
-                      </span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Clock className="h-5 w-5 text-primary-600" />
-                      <span className="text-primary-800">
-                        Est. Wait: <span className="font-semibold">{userQueue.estimated_wait} min</span>
-                      </span>
-                    </div>
+          <div className="current-queue-section">
+            <h2>Your Current Queue</h2>
+            <div className="current-queue-card">
+              <div className="queue-info">
+                <h3>{userQueue.queue_name}</h3>
+                <div className="queue-stats">
+                  <div className="stat-item">
+                    <MapPin />
+                    <span>Position: <strong>#{userQueue.position}</strong></span>
+                  </div>
+                  <div className="stat-item">
+                    <Clock />
+                    <span>Est. Wait: <strong>{userQueue.estimated_wait} min</strong></span>
                   </div>
                 </div>
-                <button
-                  onClick={leaveQueue}
-                  disabled={actionLoading}
-                  className="btn-danger flex items-center space-x-2"
-                >
-                  {actionLoading ? (
-                    <LoadingSpinner size="sm" />
-                  ) : (
-                    <>
-                      <UserMinus className="h-4 w-4" />
-                      <span>Leave Queue</span>
-                    </>
-                  )}
-                </button>
               </div>
+              <button
+                onClick={leaveQueue}
+                disabled={actionLoading}
+                className="btn-danger"
+              >
+                {actionLoading ? (
+                  <LoadingSpinner size="sm" />
+                ) : (
+                  <>
+                    <UserMinus />
+                    <span>Leave Queue</span>
+                  </>
+                )}
+              </button>
             </div>
           </div>
         ) : (
-          /* Available Queues */
-          <div className="animate-slide-up">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-gray-900">Available Queues</h2>
-              <button
-                onClick={fetchData}
-                className="btn-secondary flex items-center space-x-2"
-              >
-                <RefreshCw className="h-4 w-4" />
+          <div className="available-queues-section">
+            <div className="section-header">
+              <h2>Available Queues</h2>
+              <button onClick={fetchData} className="btn-secondary">
+                <RefreshCw />
                 <span>Refresh</span>
               </button>
             </div>
 
             {queues.length === 0 ? (
-              <div className="card text-center py-12">
-                <Users className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-gray-900 mb-2">No Queues Available</h3>
-                <p className="text-gray-500">There are currently no active queues. Please check back later.</p>
+              <div className="empty-state">
+                <Users />
+                <h3>No Queues Available</h3>
+                <p>There are currently no active queues. Please check back later.</p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="queues-grid">
                 {queues.map((queue) => (
-                  <div key={queue.id} className="card hover:shadow-lg transition-shadow duration-200">
-                    <div className="flex items-start justify-between mb-4">
-                      <h3 className="text-lg font-semibold text-gray-900">{queue.name}</h3>
-                      <div className="h-3 w-3 bg-success-400 rounded-full animate-pulse-slow"></div>
+                  <div key={queue.id} className="queue-card">
+                    <div className="queue-header">
+                      <h3>{queue.name}</h3>
+                      <div className="status-indicator active"></div>
                     </div>
                     
-                    <div className="space-y-3 mb-6">
-                      <div className="flex items-center justify-between">
-                        <span className="text-gray-600">Queue Length:</span>
-                        <span className="font-semibold text-gray-900">{queue.current_length} people</span>
+                    <div className="queue-details">
+                      <div className="detail-row">
+                        <span>Queue Length:</span>
+                        <strong>{queue.current_length} people</strong>
                       </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-gray-600">Est. Wait Time:</span>
-                        <span className="font-semibold text-gray-900">{queue.estimated_wait} min</span>
+                      <div className="detail-row">
+                        <span>Est. Wait Time:</span>
+                        <strong>{queue.estimated_wait} min</strong>
                       </div>
                     </div>
 
                     <button
                       onClick={() => joinQueue(queue.id)}
                       disabled={actionLoading}
-                      className="w-full btn-primary flex items-center justify-center space-x-2"
+                      className="btn-primary full-width"
                     >
                       {actionLoading ? (
                         <LoadingSpinner size="sm" />
                       ) : (
                         <>
-                          <Users className="h-4 w-4" />
+                          <Users />
                           <span>Join Queue</span>
                         </>
                       )}

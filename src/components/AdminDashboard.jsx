@@ -13,7 +13,7 @@ function AdminDashboard({ user, onLogout }) {
 
   useEffect(() => {
     fetchQueues();
-    const interval = setInterval(fetchQueues, 3000); // Refresh every 3 seconds
+    const interval = setInterval(fetchQueues, 3000);
     return () => clearInterval(interval);
   }, []);
 
@@ -62,14 +62,14 @@ function AdminDashboard({ user, onLogout }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="loading-container">
         <LoadingSpinner size="xl" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="dashboard">
       {toast && (
         <Toast
           message={toast.message}
@@ -78,60 +78,53 @@ function AdminDashboard({ user, onLogout }) {
         />
       )}
 
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-3">
-              <div className="h-8 w-8 bg-primary-600 rounded-lg flex items-center justify-center">
-                <Settings className="h-5 w-5 text-white" />
-              </div>
-              <div>
-                <h1 className="text-xl font-semibold text-gray-900">Admin Dashboard</h1>
-                <p className="text-sm text-gray-500">Manage queues and operations</p>
-              </div>
+      <header className="dashboard-header">
+        <div className="header-content">
+          <div className="header-left">
+            <div className="header-icon">
+              <Settings />
             </div>
-            <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-600">Welcome, {user.name}</span>
-              <button
-                onClick={onLogout}
-                className="btn-secondary flex items-center space-x-2"
-              >
-                <LogOut className="h-4 w-4" />
-                <span>Logout</span>
-              </button>
+            <div className="header-text">
+              <h1>Admin Dashboard</h1>
+              <p>Manage queues and operations</p>
             </div>
+          </div>
+          <div className="header-right">
+            <span className="user-name">Welcome, {user.name}</span>
+            <button onClick={onLogout} className="btn-secondary">
+              <LogOut />
+              <span>Logout</span>
+            </button>
           </div>
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Create Queue Section */}
-        <div className="mb-8 animate-slide-up">
+      <div className="dashboard-content">
+        <div className="create-queue-section">
           <div className="card">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center space-x-2">
-              <Plus className="h-5 w-5" />
+            <h2 className="section-title">
+              <Plus />
               <span>Create New Queue</span>
             </h2>
-            <form onSubmit={createQueue} className="flex space-x-4">
+            <form onSubmit={createQueue} className="create-queue-form">
               <input
                 type="text"
                 placeholder="Enter queue name (e.g., Customer Service, Billing, etc.)"
                 value={newQueueName}
                 onChange={(e) => setNewQueueName(e.target.value)}
-                className="input-field flex-1"
+                className="input-field"
                 required
               />
               <button
                 type="submit"
                 disabled={actionLoading}
-                className="btn-primary flex items-center space-x-2 px-6"
+                className="btn-primary"
               >
                 {actionLoading ? (
                   <LoadingSpinner size="sm" />
                 ) : (
                   <>
-                    <Plus className="h-4 w-4" />
+                    <Plus />
                     <span>Create</span>
                   </>
                 )}
@@ -140,66 +133,56 @@ function AdminDashboard({ user, onLogout }) {
           </div>
         </div>
 
-        {/* Queue Management Section */}
-        <div className="animate-slide-up">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">Queue Management</h2>
-            <button
-              onClick={fetchQueues}
-              className="btn-secondary flex items-center space-x-2"
-            >
-              <RefreshCw className="h-4 w-4" />
+        <div className="queue-management-section">
+          <div className="section-header">
+            <h2>Queue Management</h2>
+            <button onClick={fetchQueues} className="btn-secondary">
+              <RefreshCw />
               <span>Refresh</span>
             </button>
           </div>
 
           {queues.length === 0 ? (
-            <div className="card text-center py-12">
-              <Users className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">No Queues Created</h3>
-              <p className="text-gray-500">Create your first queue to start managing customer flow.</p>
+            <div className="empty-state">
+              <Users />
+              <h3>No Queues Created</h3>
+              <p>Create your first queue to start managing customer flow.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+            <div className="admin-queues-grid">
               {queues.map((queue) => (
-                <div key={queue.id} className="card hover:shadow-lg transition-shadow duration-200">
-                  <div className="flex items-start justify-between mb-4">
-                    <h3 className="text-lg font-semibold text-gray-900">{queue.name}</h3>
-                    <div className={`h-3 w-3 rounded-full ${queue.current_length > 0 ? 'bg-warning-400 animate-pulse-slow' : 'bg-success-400'}`}></div>
+                <div key={queue.id} className="admin-queue-card">
+                  <div className="queue-header">
+                    <h3>{queue.name}</h3>
+                    <div className={`status-indicator ${queue.current_length > 0 ? 'warning' : 'success'}`}></div>
                   </div>
 
-                  <div className="space-y-4 mb-6">
-                    <div className="bg-gray-50 rounded-lg p-4">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm text-gray-600">People in Queue:</span>
-                        <span className="text-lg font-bold text-gray-900">{queue.current_length}</span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-600">Total Wait Time:</span>
-                        <span className="text-sm font-semibold text-gray-700">{queue.estimated_wait} minutes</span>
-                      </div>
+                  <div className="queue-stats-box">
+                    <div className="stat-row">
+                      <span>People in Queue:</span>
+                      <strong className="stat-number">{queue.current_length}</strong>
                     </div>
+                    <div className="stat-row">
+                      <span>Total Wait Time:</span>
+                      <strong>{queue.estimated_wait} minutes</strong>
+                    </div>
+                  </div>
 
-                    <div className="flex items-center space-x-2 text-sm text-gray-500">
-                      <Clock className="h-4 w-4" />
-                      <span>Created: {new Date(queue.created_at).toLocaleDateString()}</span>
-                    </div>
+                  <div className="queue-meta">
+                    <Clock />
+                    <span>Created: {new Date(queue.created_at).toLocaleDateString()}</span>
                   </div>
 
                   <button
                     onClick={() => processNext(queue.id, queue.name)}
                     disabled={actionLoading || queue.current_length === 0}
-                    className={`w-full flex items-center justify-center space-x-2 py-2 px-4 rounded-lg font-medium transition-colors duration-200 ${
-                      queue.current_length === 0
-                        ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                        : 'btn-primary'
-                    }`}
+                    className={`btn-primary full-width ${queue.current_length === 0 ? 'disabled' : ''}`}
                   >
                     {actionLoading ? (
                       <LoadingSpinner size="sm" />
                     ) : (
                       <>
-                        <UserCheck className="h-4 w-4" />
+                        <UserCheck />
                         <span>
                           {queue.current_length === 0 ? 'No One in Queue' : 'Process Next Person'}
                         </span>

@@ -22,7 +22,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.31.0",
-    "@vitejs/plugin-react": "^4.6.0"
+    "@vitejs/plugin-react": "^4.6.0",
+    "globals": "^16.3.0"
   },
   "description": "A modern web-based queue management system designed to streamline and enhance customer service efficiency in clinics, banks, and public service centers.",
   "main": "eslint.config.js",

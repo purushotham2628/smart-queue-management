@@ -24,3 +24,4 @@ dist-ssr
 *.sw?
 .bolt/
 .env
+backend/queue_system.db
